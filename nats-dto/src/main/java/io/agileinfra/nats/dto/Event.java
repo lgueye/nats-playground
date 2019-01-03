@@ -14,10 +14,8 @@ import java.time.Instant;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ScheduleRequest {
+public class Event {
 	private String id;
 	private Instant at;
-	private String destination;
-	private String message;
-	private boolean submitted;
+	private State state;
 }

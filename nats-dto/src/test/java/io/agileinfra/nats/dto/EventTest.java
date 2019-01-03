@@ -15,18 +15,15 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by <a href="mailto:louis.gueye@gmail.com">Louis Gueye</a>.
  */
-public class ScheduleRequestTest {
+public class EventTest {
 	@Test
 	public void test() throws JsonProcessingException {
-		final ScheduleRequest request = ScheduleRequest.builder().id(UUID.randomUUID().toString()).at(Instant.now()).destination("foo.queue")
-				.message("{\"foo\":\"baz\"}").build();
+		final Event request = Event.builder().id(UUID.randomUUID().toString()).at(Instant.now()).state(State.off).build();
 		final String value = Jackson2ObjectMapperBuilder.json().serializationInclusion(JsonInclude.Include.NON_NULL) // Don’t include null values
 				.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS) // use ISODate and not Timestamps
 				.modules(new JavaTimeModule()).build().writeValueAsString(request);
+		System.out.println("value = " + value);
 		assertTrue(true);
-		// System.out.println("value = " + value);
-		// System.out
-		// .println("{\"id\":\"91dbac95-1dec-4ad1-8a05-65317de2f3a7\",\"at\":\"2018-12-20T12:10:07.260Z\",\"destination\":\"foo.queue\",\"message\":\"{\\\"foo\\\":\\\"baz\\\"}\",\"submitted\":false}");
 	}
 
 }
