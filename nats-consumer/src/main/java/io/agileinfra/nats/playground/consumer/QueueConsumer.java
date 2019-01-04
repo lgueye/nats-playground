@@ -15,6 +15,7 @@ import java.io.IOException;
 @Slf4j
 public class QueueConsumer implements QueueHandler {
 
+	private final String node;
 	private final String subject;
 	private final String queue;
 	private final ObjectMapper objectMapper;
@@ -30,10 +31,10 @@ public class QueueConsumer implements QueueHandler {
 	}
 
 	@Override
-	public void onMessage(Message msg) throws InterruptedException {
+	public void onMessage(Message msg) {
 		try {
 			final Event event = objectMapper.readValue(msg.getData(), Event.class);
-			log.info("Queue () received event {} from subject {}", event, msg.getSubject());
+			log.info("[{}#{}] received event {} from subject {}", node, queue, event, msg.getSubject());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -15,6 +15,7 @@ import java.io.IOException;
 @Slf4j
 public class TopicConsumer implements TopicHandler {
 
+	private final String node;
 	private final String subject;
 	private final ObjectMapper objectMapper;
 
@@ -24,10 +25,10 @@ public class TopicConsumer implements TopicHandler {
 	}
 
 	@Override
-	public void onMessage(Message msg) throws InterruptedException {
+	public void onMessage(Message msg) {
 		try {
 			final Event event = objectMapper.readValue(msg.getData(), Event.class);
-			log.info("Received event {} from subject {}", event, msg.getSubject());
+			log.info("[{}] received event {} from subject {}", node, event, msg.getSubject());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
